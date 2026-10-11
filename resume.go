@@ -164,6 +164,12 @@ type ResumeEducationElem struct {
 	// A list of keywords pertaining to this education.
 	Keywords Keywords `json:"keywords,omitempty,omitzero" yaml:"keywords,omitempty" mapstructure:"keywords,omitempty"`
 
+	// The attainment level of this education, e.g. 'undergraduate'. Filtering code
+	// uses this to drop entries well below the highest level attained, such as high
+	// school once a degree exists. Entries without a level, or at level 'other', are
+	// never filtered.
+	Level *ResumeEducationElemLevel `json:"level,omitempty,omitzero" yaml:"level,omitempty" mapstructure:"level,omitempty"`
+
 	// The location of the institution, e.g. 'Boston, MA'.
 	Location *string `json:"location,omitempty,omitzero" yaml:"location,omitempty" mapstructure:"location,omitempty"`
 
@@ -201,6 +207,64 @@ type ResumeEducationElemHonorSocietiesElem struct {
 
 	// The name of the honor society, e.g. 'Phi Beta Kappa'.
 	Name *string `json:"name,omitempty,omitzero" yaml:"name,omitempty" mapstructure:"name,omitempty"`
+}
+
+type ResumeEducationElemLevel string
+
+const ResumeEducationElemLevelGraduate ResumeEducationElemLevel = "graduate"
+const ResumeEducationElemLevelK12 ResumeEducationElemLevel = "k-12"
+const ResumeEducationElemLevelOther ResumeEducationElemLevel = "other"
+const ResumeEducationElemLevelProfessional ResumeEducationElemLevel = "professional"
+const ResumeEducationElemLevelTrade ResumeEducationElemLevel = "trade"
+const ResumeEducationElemLevelUndergraduate ResumeEducationElemLevel = "undergraduate"
+
+var enumValues_ResumeEducationElemLevel = []interface{}{
+	"k-12",
+	"trade",
+	"undergraduate",
+	"graduate",
+	"professional",
+	"other",
+}
+
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *ResumeEducationElemLevel) UnmarshalYAML(value *yaml.Node) error {
+	var v string
+	if err := value.Decode(&v); err != nil {
+		return err
+	}
+	var ok bool
+	for _, expected := range enumValues_ResumeEducationElemLevel {
+		if reflect.DeepEqual(v, expected) {
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		return fmt.Errorf("invalid value (expected one of %#v): %#v", enumValues_ResumeEducationElemLevel, v)
+	}
+	*j = ResumeEducationElemLevel(v)
+	return nil
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *ResumeEducationElemLevel) UnmarshalJSON(value []byte) error {
+	var v string
+	if err := json.Unmarshal(value, &v); err != nil {
+		return err
+	}
+	var ok bool
+	for _, expected := range enumValues_ResumeEducationElemLevel {
+		if reflect.DeepEqual(v, expected) {
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		return fmt.Errorf("invalid value (expected one of %#v): %#v", enumValues_ResumeEducationElemLevel, v)
+	}
+	*j = ResumeEducationElemLevel(v)
+	return nil
 }
 
 type ResumeEducationElemProgramsElem struct {
@@ -328,11 +392,11 @@ func (j *ResumeEducationElemProgramsElem) UnmarshalYAML(value *yaml.Node) error 
 	return nil
 }
 
-// UnmarshalYAML implements yaml.Unmarshaler.
-func (j *ResumeEducationElem) UnmarshalYAML(value *yaml.Node) error {
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *ResumeEducationElem) UnmarshalJSON(value []byte) error {
 	type Plain ResumeEducationElem
 	var plain Plain
-	if err := value.Decode(&plain); err != nil {
+	if err := json.Unmarshal(value, &plain); err != nil {
 		return err
 	}
 	if plain.Programs != nil && len(plain.Programs) < 1 {
@@ -342,11 +406,11 @@ func (j *ResumeEducationElem) UnmarshalYAML(value *yaml.Node) error {
 	return nil
 }
 
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *ResumeEducationElem) UnmarshalJSON(value []byte) error {
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *ResumeEducationElem) UnmarshalYAML(value *yaml.Node) error {
 	type Plain ResumeEducationElem
 	var plain Plain
-	if err := json.Unmarshal(value, &plain); err != nil {
+	if err := value.Decode(&plain); err != nil {
 		return err
 	}
 	if plain.Programs != nil && len(plain.Programs) < 1 {
