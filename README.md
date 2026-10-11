@@ -8,6 +8,10 @@ The generated files are committed to the repo:
 - `job.go` (generated from `resume-schema/job-schema.json`)
 - `resume.go` (generated from `resume-schema/schema.json`)
 
+Hand-written helpers (do not regenerate these):
+
+- `decode.go` — `DecodeResume` / `DecodeJob` accept JSON or YAML. YAML timestamps are rewritten to schema date or RFC3339 strings, then validated through the generated JSON unmarshalers.
+
 ## Prerequisites
 
 - Go (see `go.mod`)
