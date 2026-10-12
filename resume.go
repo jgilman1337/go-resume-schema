@@ -508,6 +508,10 @@ type ResumeProjectsElem struct {
 	// formula with quantifiable attributes.
 	Highlights []string `json:"highlights,omitempty,omitzero" yaml:"highlights,omitempty" mapstructure:"highlights,omitempty"`
 
+	// Stable join key for a questionnaire. Distinct from certificates[].id, which is
+	// a certificate verification number.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
+
 	// A list of keywords pertaining to this project.
 	Keywords Keywords `json:"keywords,omitempty,omitzero" yaml:"keywords,omitempty" mapstructure:"keywords,omitempty"`
 
@@ -579,6 +583,10 @@ type ResumeVolunteerElem struct {
 	// XYZ formula with quantifiable attributes.
 	Highlights []string `json:"highlights,omitempty,omitzero" yaml:"highlights,omitempty" mapstructure:"highlights,omitempty"`
 
+	// Stable join key for a questionnaire. Distinct from certificates[].id, which is
+	// a certificate verification number.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
+
 	// A list of keywords pertaining to this volunteer position.
 	Keywords Keywords `json:"keywords,omitempty,omitzero" yaml:"keywords,omitempty" mapstructure:"keywords,omitempty"`
 
@@ -615,6 +623,10 @@ type ResumeWorkElem struct {
 	// A list of the key highlights of the volunteer role. For best results, use the
 	// XYZ formula with quantifiable attributes.
 	Highlights []string `json:"highlights,omitempty,omitzero" yaml:"highlights,omitempty" mapstructure:"highlights,omitempty"`
+
+	// Stable join key for a questionnaire. Distinct from certificates[].id, which is
+	// a certificate verification number.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
 	// A list of keywords pertaining to this job position.
 	Keywords Keywords `json:"keywords,omitempty,omitzero" yaml:"keywords,omitempty" mapstructure:"keywords,omitempty"`
