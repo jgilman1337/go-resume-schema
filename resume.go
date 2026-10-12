@@ -4,7 +4,7 @@ package go_resume_schema
 
 import "encoding/json"
 import "fmt"
-import yaml "gopkg.in/yaml.v3"
+import yaml "go.yaml.in/yaml/v4"
 import "reflect"
 
 type Resume struct {

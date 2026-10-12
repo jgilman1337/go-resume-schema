@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"gopkg.in/yaml.v3"
+	"go.yaml.in/yaml/v4"
 )
 
 // DecodeResume decodes a Resume from JSON or YAML.
@@ -80,7 +80,7 @@ func isJSON(data []byte) bool {
 	}
 }
 
-// normalizeYAML turns yaml.v3 timestamps into strings the schema accepts.
+// normalizeYAML turns YAML timestamps into strings the schema accepts.
 func normalizeYAML(value any) {
 	switch typed := value.(type) {
 	case map[string]any:

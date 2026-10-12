@@ -25,12 +25,9 @@ make schema_resume
 
 ## Pinning the `go-jsonschema` generator version
 
-The Makefile reads the generator version from:
-
-- `go-jsonschema_version.txt`
-
-To bump the generator, edit that file and run:
+The generator is a Go tool in `go.mod`. To bump it:
 
 ```bash
+go get -tool github.com/atombender/go-jsonschema@vX.Y.Z
 make schema_resume
 ```
