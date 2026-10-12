@@ -508,8 +508,9 @@ type ResumeProjectsElem struct {
 	// formula with quantifiable attributes.
 	Highlights []string `json:"highlights,omitempty,omitzero" yaml:"highlights,omitempty" mapstructure:"highlights,omitempty"`
 
-	// Stable join key for a questionnaire. Distinct from certificates[].id, which is
-	// a certificate verification number.
+	// Stable join key for a questionnaire, and the value stored in
+	// work[].crossReferencedProjects. Distinct from certificates[].id, which is a
+	// certificate verification number.
 	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
 	// A list of keywords pertaining to this project.
@@ -609,6 +610,11 @@ type ResumeVolunteerElem struct {
 }
 
 type ResumeWorkElem struct {
+	// Optional list of projects[].id values for projects that belong to this job,
+	// such as consulting engagements under one employer. Each string is a
+	// projects[].id, not this job's own id.
+	CrossReferencedProjects []string `json:"crossReferencedProjects,omitempty,omitzero" yaml:"crossReferencedProjects,omitempty" mapstructure:"crossReferencedProjects,omitempty"`
+
 	// A short, 1 sentence maximum description of the company, e.g. 'Social Media
 	// Company'.
 	Description *string `json:"description,omitempty,omitzero" yaml:"description,omitempty" mapstructure:"description,omitempty"`

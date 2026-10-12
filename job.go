@@ -7,6 +7,7 @@ import "fmt"
 import yaml "go.yaml.in/yaml/v4"
 import "reflect"
 
+// This schema is for defining a job description
 type Job struct {
 	// The company offering the role, e.g. 'Microsoft'.
 	Company *string `json:"company,omitempty,omitzero" yaml:"company,omitempty" mapstructure:"company,omitempty"`
