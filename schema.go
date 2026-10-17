@@ -46,16 +46,26 @@ func KeywordsDictionaryJSONSchema() (map[string]any, error) {
 	return readJSONObject(KeywordsDictionarySchemaPath)
 }
 
-// resolvedWithTypes loads a schema file and inlines types.json definitions.
+// resolvedWithTypes loads a schema file and inlines $ref values: local refs
+// resolve from the document's own definitions block, and the cross-file refs
+// resolve from types.json.
 func resolvedWithTypes(path string) (map[string]any, error) {
 	doc, err := readJSONObject(path)
 	if err != nil {
 		return nil, err
 	}
 
+	// The shared definitions from types.json back the cross-file refs.
 	defs, err := typesDefinitions()
 	if err != nil {
 		return nil, err
+	}
+
+	// The document's own definitions resolve its local refs and shadow the
+	// shared names.
+	local, _ := doc["definitions"].(map[string]any)
+	for name, def := range local {
+		defs[name] = def
 	}
 
 	resolved, err := resolveRefs(doc, defs)
@@ -67,6 +77,10 @@ func resolvedWithTypes(path string) (map[string]any, error) {
 	if !ok {
 		return nil, fmt.Errorf("%s is not an object", path)
 	}
+
+	// Every ref is inlined now, so the definitions block itself is dead
+	// weight in the resolved document.
+	delete(schema, "definitions")
 
 	return schema, nil
 }

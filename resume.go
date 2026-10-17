@@ -43,6 +43,9 @@ type Resume struct {
 	// A list of references/letters of recommendation received.
 	References []ResumeReferencesElem `json:"references,omitempty,omitzero" yaml:"references,omitempty" mapstructure:"references,omitempty"`
 
+	// Settings corresponds to the JSON schema field "settings".
+	Settings *Settings `json:"settings,omitempty,omitzero" yaml:"settings,omitempty" mapstructure:"settings,omitempty"`
+
 	// A list of professional skills, including their mastery level.
 	Skills []ResumeSkillsElem `json:"skills,omitempty,omitzero" yaml:"skills,omitempty" mapstructure:"skills,omitempty"`
 
@@ -61,6 +64,9 @@ type ResumeAwardsElem struct {
 
 	// Date corresponds to the JSON schema field "date".
 	Date *Iso8601 `json:"date,omitempty,omitzero" yaml:"date,omitempty" mapstructure:"date,omitempty"`
+
+	// Stable token a settings exclusion uses to name this award.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
 	// A list of keywords pertaining to this award.
 	Keywords Keywords `json:"keywords,omitempty,omitzero" yaml:"keywords,omitempty" mapstructure:"keywords,omitempty"`
@@ -113,7 +119,8 @@ type ResumeCertificatesElem struct {
 	// The date the certificate was issued.
 	Date *Iso8601 `json:"date,omitempty,omitzero" yaml:"date,omitempty" mapstructure:"date,omitempty"`
 
-	// The ID number of the certificate for verification purposes, if applicable.
+	// Stable token a settings exclusion uses to name this certificate. Distinct from
+	// verificationId, which is the certificate's verification number.
 	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
 	// The organization or entity that awarded the certificate, e.g. 'CNCF'.
@@ -128,6 +135,9 @@ type ResumeCertificatesElem struct {
 	// The relevant URL of the awarding organization's homepage, e.g.
 	// 'http://example.com'.
 	Url *string `json:"url,omitempty,omitzero" yaml:"url,omitempty" mapstructure:"url,omitempty"`
+
+	// The ID number of the certificate for verification purposes, if applicable.
+	VerificationId *string `json:"verificationId,omitempty,omitzero" yaml:"verificationId,omitempty" mapstructure:"verificationId,omitempty"`
 }
 
 type ResumeEducationElem struct {
@@ -156,6 +166,9 @@ type ResumeEducationElem struct {
 	// A list of honor societies inducted into during the completion of education at
 	// this institution.
 	HonorSocieties []ResumeEducationElemHonorSocietiesElem `json:"honorSocieties,omitempty,omitzero" yaml:"honorSocieties,omitempty" mapstructure:"honorSocieties,omitempty"`
+
+	// Stable token a settings exclusion uses to name this institution.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
 	// The name of the institution being attended, e.g. 'Massachusetts Institute of
 	// Technology'.
@@ -227,10 +240,10 @@ var enumValues_ResumeEducationElemLevel = []interface{}{
 	"other",
 }
 
-// UnmarshalYAML implements yaml.Unmarshaler.
-func (j *ResumeEducationElemLevel) UnmarshalYAML(value *yaml.Node) error {
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *ResumeEducationElemLevel) UnmarshalJSON(value []byte) error {
 	var v string
-	if err := value.Decode(&v); err != nil {
+	if err := json.Unmarshal(value, &v); err != nil {
 		return err
 	}
 	var ok bool
@@ -247,10 +260,10 @@ func (j *ResumeEducationElemLevel) UnmarshalYAML(value *yaml.Node) error {
 	return nil
 }
 
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *ResumeEducationElemLevel) UnmarshalJSON(value []byte) error {
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *ResumeEducationElemLevel) UnmarshalYAML(value *yaml.Node) error {
 	var v string
-	if err := json.Unmarshal(value, &v); err != nil {
+	if err := value.Decode(&v); err != nil {
 		return err
 	}
 	var ok bool
@@ -310,10 +323,10 @@ var enumValues_ResumeEducationElemProgramsElemType = []interface{}{
 	"Other",
 }
 
-// UnmarshalYAML implements yaml.Unmarshaler.
-func (j *ResumeEducationElemProgramsElemType) UnmarshalYAML(value *yaml.Node) error {
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *ResumeEducationElemProgramsElemType) UnmarshalJSON(value []byte) error {
 	var v string
-	if err := value.Decode(&v); err != nil {
+	if err := json.Unmarshal(value, &v); err != nil {
 		return err
 	}
 	var ok bool
@@ -330,10 +343,10 @@ func (j *ResumeEducationElemProgramsElemType) UnmarshalYAML(value *yaml.Node) er
 	return nil
 }
 
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *ResumeEducationElemProgramsElemType) UnmarshalJSON(value []byte) error {
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *ResumeEducationElemProgramsElemType) UnmarshalYAML(value *yaml.Node) error {
 	var v string
-	if err := json.Unmarshal(value, &v); err != nil {
+	if err := value.Decode(&v); err != nil {
 		return err
 	}
 	var ok bool
@@ -421,6 +434,9 @@ func (j *ResumeEducationElem) UnmarshalYAML(value *yaml.Node) error {
 }
 
 type ResumeInterestsElem struct {
+	// Stable token a settings exclusion uses to name this interest.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
+
 	// A list of keywords pertaining to this interest.
 	Keywords Keywords `json:"keywords,omitempty,omitzero" yaml:"keywords,omitempty" mapstructure:"keywords,omitempty"`
 
@@ -431,6 +447,9 @@ type ResumeInterestsElem struct {
 type ResumeLanguagesElem struct {
 	// The proficiency in utilizing this language according to the CEFR.
 	Fluency *ResumeLanguagesElemFluency `json:"fluency,omitempty,omitzero" yaml:"fluency,omitempty" mapstructure:"fluency,omitempty"`
+
+	// Stable token a settings exclusion uses to name this language.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
 	// e.g. English, Spanish
 	Language *string `json:"language,omitempty,omitzero" yaml:"language,omitempty" mapstructure:"language,omitempty"`
@@ -452,10 +471,10 @@ var enumValues_ResumeLanguagesElemFluency = []interface{}{
 	"Native",
 }
 
-// UnmarshalYAML implements yaml.Unmarshaler.
-func (j *ResumeLanguagesElemFluency) UnmarshalYAML(value *yaml.Node) error {
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *ResumeLanguagesElemFluency) UnmarshalJSON(value []byte) error {
 	var v string
-	if err := value.Decode(&v); err != nil {
+	if err := json.Unmarshal(value, &v); err != nil {
 		return err
 	}
 	var ok bool
@@ -472,10 +491,10 @@ func (j *ResumeLanguagesElemFluency) UnmarshalYAML(value *yaml.Node) error {
 	return nil
 }
 
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *ResumeLanguagesElemFluency) UnmarshalJSON(value []byte) error {
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *ResumeLanguagesElemFluency) UnmarshalYAML(value *yaml.Node) error {
 	var v string
-	if err := json.Unmarshal(value, &v); err != nil {
+	if err := value.Decode(&v); err != nil {
 		return err
 	}
 	var ok bool
@@ -508,9 +527,10 @@ type ResumeProjectsElem struct {
 	// formula with quantifiable attributes.
 	Highlights []string `json:"highlights,omitempty,omitzero" yaml:"highlights,omitempty" mapstructure:"highlights,omitempty"`
 
-	// Stable join key for a questionnaire, and the value stored in
-	// work[].crossReferencedProjects. Distinct from certificates[].id, which is a
-	// certificate verification number.
+	// Stable join key for a questionnaire, the value stored in
+	// work[].crossReferencedProjects, and the token a settings exclusion uses to name
+	// this entry. Distinct from certificates[].verificationId, which is a certificate
+	// verification number.
 	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
 	// A list of keywords pertaining to this project.
@@ -533,6 +553,9 @@ type ResumeProjectsElem struct {
 }
 
 type ResumePublicationsElem struct {
+	// Stable token a settings exclusion uses to name this publication.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
+
 	// A list of keywords pertaining to this publication.
 	Keywords Keywords `json:"keywords,omitempty,omitzero" yaml:"keywords,omitempty" mapstructure:"keywords,omitempty"`
 
@@ -555,6 +578,9 @@ type ResumePublicationsElem struct {
 }
 
 type ResumeReferencesElem struct {
+	// Stable token a settings exclusion uses to name this reference.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
+
 	// The person who wrote the reference, e.g. 'Timothy Cook'.
 	Name *string `json:"name,omitempty,omitzero" yaml:"name,omitempty" mapstructure:"name,omitempty"`
 
@@ -564,6 +590,9 @@ type ResumeReferencesElem struct {
 }
 
 type ResumeSkillsElem struct {
+	// Stable token a settings exclusion uses to name this skill.
+	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
+
 	// A list of keywords pertaining to this skill.
 	Keywords Keywords `json:"keywords,omitempty,omitzero" yaml:"keywords,omitempty" mapstructure:"keywords,omitempty"`
 
@@ -584,8 +613,9 @@ type ResumeVolunteerElem struct {
 	// XYZ formula with quantifiable attributes.
 	Highlights []string `json:"highlights,omitempty,omitzero" yaml:"highlights,omitempty" mapstructure:"highlights,omitempty"`
 
-	// Stable join key for a questionnaire. Distinct from certificates[].id, which is
-	// a certificate verification number.
+	// Stable join key for a questionnaire, and the token a settings exclusion uses to
+	// name this entry. Distinct from certificates[].verificationId, which is a
+	// certificate verification number.
 	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
 	// A list of keywords pertaining to this volunteer position.
@@ -630,8 +660,9 @@ type ResumeWorkElem struct {
 	// XYZ formula with quantifiable attributes.
 	Highlights []string `json:"highlights,omitempty,omitzero" yaml:"highlights,omitempty" mapstructure:"highlights,omitempty"`
 
-	// Stable join key for a questionnaire. Distinct from certificates[].id, which is
-	// a certificate verification number.
+	// Stable join key for a questionnaire, and the token a settings exclusion uses to
+	// name this entry. Distinct from certificates[].verificationId, which is a
+	// certificate verification number.
 	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
 	// A list of keywords pertaining to this job position.
@@ -654,6 +685,24 @@ type ResumeWorkElem struct {
 	Url *string `json:"url,omitempty,omitzero" yaml:"url,omitempty" mapstructure:"url,omitempty"`
 }
 
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *Resume) UnmarshalYAML(value *yaml.Node) error {
+	var raw map[string]interface{}
+	if err := value.Decode(&raw); err != nil {
+		return err
+	}
+	if _, ok := raw["meta"]; raw != nil && !ok {
+		return fmt.Errorf("field meta in Resume: required")
+	}
+	type Plain Resume
+	var plain Plain
+	if err := value.Decode(&plain); err != nil {
+		return err
+	}
+	*j = Resume(plain)
+	return nil
+}
+
 // UnmarshalJSON implements json.Unmarshaler.
 func (j *Resume) UnmarshalJSON(value []byte) error {
 	var raw map[string]interface{}
@@ -672,20 +721,279 @@ func (j *Resume) UnmarshalJSON(value []byte) error {
 	return nil
 }
 
+type Section string
+
+const SectionAwards Section = "awards"
+const SectionBasics Section = "basics"
+const SectionCertificates Section = "certificates"
+const SectionEducation Section = "education"
+const SectionInterests Section = "interests"
+const SectionLanguages Section = "languages"
+const SectionProjects Section = "projects"
+const SectionPublications Section = "publications"
+const SectionReferences Section = "references"
+const SectionSkills Section = "skills"
+const SectionSummary Section = "summary"
+const SectionVolunteer Section = "volunteer"
+const SectionWork Section = "work"
+
+var enumValues_Section = []interface{}{
+	"basics",
+	"summary",
+	"skills",
+	"education",
+	"work",
+	"projects",
+	"certificates",
+	"publications",
+	"awards",
+	"volunteer",
+	"languages",
+	"interests",
+	"references",
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *Section) UnmarshalJSON(value []byte) error {
+	var v string
+	if err := json.Unmarshal(value, &v); err != nil {
+		return err
+	}
+	var ok bool
+	for _, expected := range enumValues_Section {
+		if reflect.DeepEqual(v, expected) {
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		return fmt.Errorf("invalid value (expected one of %#v): %#v", enumValues_Section, v)
+	}
+	*j = Section(v)
+	return nil
+}
+
 // UnmarshalYAML implements yaml.Unmarshaler.
-func (j *Resume) UnmarshalYAML(value *yaml.Node) error {
+func (j *Section) UnmarshalYAML(value *yaml.Node) error {
+	var v string
+	if err := value.Decode(&v); err != nil {
+		return err
+	}
+	var ok bool
+	for _, expected := range enumValues_Section {
+		if reflect.DeepEqual(v, expected) {
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		return fmt.Errorf("invalid value (expected one of %#v): %#v", enumValues_Section, v)
+	}
+	*j = Section(v)
+	return nil
+}
+
+// Presentation preferences that travel with the document: the print order of the
+// resume's sections and the sections or individual entries kept out of exports,
+// tailoring, and prints.
+type Settings struct {
+	// Content kept out of exports, tailoring, and prints. A bare section name
+	// excludes the whole section; a subsection token excludes one entry within it,
+	// spelled as the entry's stable id. Documents saved before ids were stamped may
+	// still spell the entry's list index, e.g. '0'; the save route rewrites those to
+	// ids.
+	Exclusions []SettingsExclusionsElem `json:"exclusions,omitempty,omitzero" yaml:"exclusions,omitempty" mapstructure:"exclusions,omitempty"`
+
+	// The shape and encoding the fact bank export uses. Fragmented writes one
+	// document per resume section, combined writes the whole resume as one document,
+	// the v1 shapes rewrite the resume into the pre-migration JSON Resume form as one
+	// document in the matching encoding, and resumetailorai rewrites the resume into
+	// the Resume-Tailor-AI fact bank shape as one JSON document. Absent keeps the
+	// fragmented JSON default.
+	ExportFormat SettingsExportFormat `json:"exportFormat,omitempty,omitzero" yaml:"exportFormat,omitempty" mapstructure:"exportFormat,omitempty"`
+
+	// The resume sections in print order. Every section missing from the list prints
+	// after the listed ones in the default technical order; basics always prints
+	// first as the page header. Absent when the document keeps the default order.
+	SectionOrder []Section `json:"sectionOrder,omitempty,omitzero" yaml:"sectionOrder,omitempty" mapstructure:"sectionOrder,omitempty"`
+}
+
+type SettingsExclusionsElem struct {
+	// Section corresponds to the JSON schema field "section".
+	Section Section `json:"section" yaml:"section" mapstructure:"section"`
+
+	// The entry within the section to exclude, spelled as the entry's stable id.
+	// Legacy documents may spell the entry's list index, e.g. '0'; the save route
+	// rewrites those to ids. Empty or absent excludes the whole section.
+	Subsection *string `json:"subsection,omitempty,omitzero" yaml:"subsection,omitempty" mapstructure:"subsection,omitempty"`
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *SettingsExclusionsElem) UnmarshalJSON(value []byte) error {
+	var raw map[string]interface{}
+	if err := json.Unmarshal(value, &raw); err != nil {
+		return err
+	}
+	if _, ok := raw["section"]; raw != nil && !ok {
+		return fmt.Errorf("field section in SettingsExclusionsElem: required")
+	}
+	type Plain SettingsExclusionsElem
+	var plain Plain
+	if err := json.Unmarshal(value, &plain); err != nil {
+		return err
+	}
+	*j = SettingsExclusionsElem(plain)
+	return nil
+}
+
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *SettingsExclusionsElem) UnmarshalYAML(value *yaml.Node) error {
 	var raw map[string]interface{}
 	if err := value.Decode(&raw); err != nil {
 		return err
 	}
-	if _, ok := raw["meta"]; raw != nil && !ok {
-		return fmt.Errorf("field meta in Resume: required")
+	if _, ok := raw["section"]; raw != nil && !ok {
+		return fmt.Errorf("field section in SettingsExclusionsElem: required")
 	}
-	type Plain Resume
+	type Plain SettingsExclusionsElem
 	var plain Plain
 	if err := value.Decode(&plain); err != nil {
 		return err
 	}
-	*j = Resume(plain)
+	*j = SettingsExclusionsElem(plain)
+	return nil
+}
+
+type SettingsExportFormat string
+
+const SettingsExportFormatCombinedJson SettingsExportFormat = "combined-json"
+const SettingsExportFormatCombinedYaml SettingsExportFormat = "combined-yaml"
+const SettingsExportFormatFragmentedJson SettingsExportFormat = "fragmented-json"
+const SettingsExportFormatFragmentedYaml SettingsExportFormat = "fragmented-yaml"
+const SettingsExportFormatResumetailoraiJson SettingsExportFormat = "resumetailorai-json"
+const SettingsExportFormatV1Json SettingsExportFormat = "v1-json"
+const SettingsExportFormatV1Yaml SettingsExportFormat = "v1-yaml"
+
+var enumValues_SettingsExportFormat = []interface{}{
+	"fragmented-json",
+	"fragmented-yaml",
+	"combined-json",
+	"combined-yaml",
+	"v1-json",
+	"v1-yaml",
+	"resumetailorai-json",
+}
+
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *SettingsExportFormat) UnmarshalYAML(value *yaml.Node) error {
+	var v string
+	if err := value.Decode(&v); err != nil {
+		return err
+	}
+	var ok bool
+	for _, expected := range enumValues_SettingsExportFormat {
+		if reflect.DeepEqual(v, expected) {
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		return fmt.Errorf("invalid value (expected one of %#v): %#v", enumValues_SettingsExportFormat, v)
+	}
+	*j = SettingsExportFormat(v)
+	return nil
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *SettingsExportFormat) UnmarshalJSON(value []byte) error {
+	var v string
+	if err := json.Unmarshal(value, &v); err != nil {
+		return err
+	}
+	var ok bool
+	for _, expected := range enumValues_SettingsExportFormat {
+		if reflect.DeepEqual(v, expected) {
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		return fmt.Errorf("invalid value (expected one of %#v): %#v", enumValues_SettingsExportFormat, v)
+	}
+	*j = SettingsExportFormat(v)
+	return nil
+}
+
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *Settings) UnmarshalYAML(value *yaml.Node) error {
+	var raw map[string]interface{}
+	if err := value.Decode(&raw); err != nil {
+		return err
+	}
+	type Plain Settings
+	var plain Plain
+	if err := value.Decode(&plain); err != nil {
+		return err
+	}
+	if v, ok := raw["exclusions"]; !ok || v == nil {
+		plain.Exclusions = []SettingsExclusionsElem{}
+	}
+	if v, ok := raw["exportFormat"]; !ok || v == nil {
+		plain.ExportFormat = "fragmented-json"
+	}
+	if v, ok := raw["sectionOrder"]; !ok || v == nil {
+		plain.SectionOrder = []Section{
+			"summary",
+			"skills",
+			"education",
+			"work",
+			"projects",
+			"certificates",
+			"publications",
+			"awards",
+			"volunteer",
+			"languages",
+			"interests",
+			"references",
+		}
+	}
+	*j = Settings(plain)
+	return nil
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *Settings) UnmarshalJSON(value []byte) error {
+	var raw map[string]interface{}
+	if err := json.Unmarshal(value, &raw); err != nil {
+		return err
+	}
+	type Plain Settings
+	var plain Plain
+	if err := json.Unmarshal(value, &plain); err != nil {
+		return err
+	}
+	if v, ok := raw["exclusions"]; !ok || v == nil {
+		plain.Exclusions = []SettingsExclusionsElem{}
+	}
+	if v, ok := raw["exportFormat"]; !ok || v == nil {
+		plain.ExportFormat = "fragmented-json"
+	}
+	if v, ok := raw["sectionOrder"]; !ok || v == nil {
+		plain.SectionOrder = []Section{
+			"summary",
+			"skills",
+			"education",
+			"work",
+			"projects",
+			"certificates",
+			"publications",
+			"awards",
+			"volunteer",
+			"languages",
+			"interests",
+			"references",
+		}
+	}
+	*j = Settings(plain)
 	return nil
 }
