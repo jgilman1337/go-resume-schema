@@ -1,0 +1,22 @@
+{
+	"$": [
+		"title",
+		"company",
+		"type",
+		"date",
+		"description",
+		"location",
+		"remote",
+		"salary",
+		"experience",
+		"responsibilities",
+		"qualifications",
+		"optionalQualifications",
+		"keywords",
+		"skills",
+		"meta"
+	],
+	"location": ["address", "postalCode", "city", "countryCode", "region"],
+	"skills.skill": ["name", "level", "keywords"],
+	"meta": ["canonical", "version", "lastModified"]
+}
