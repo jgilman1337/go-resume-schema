@@ -151,8 +151,16 @@ type ResumeEducationElem struct {
 	// A list of relevant courses/subjects.
 	Courses []string `json:"courses,omitempty,omitzero" yaml:"courses,omitempty" mapstructure:"courses,omitempty"`
 
+	// The stretches of time this education was attended, sorted from oldest to
+	// newest. Multiple ranges express interrupted attendance, e.g. a leave of
+	// absence. If current and ongoing, the last range's endDate is a blank string. An
+	// entry carries either this array or the legacy startDate/endDate pair, never
+	// both.
+	Dates []DateRange `json:"dates,omitempty,omitzero" yaml:"dates,omitempty" mapstructure:"dates,omitempty"`
+
 	// The date on which the education at this institution was stopped. If current and
-	// ongoing, specify a blank string as the value for this key.
+	// ongoing, specify a blank string as the value for this key. Legacy single-range
+	// form, only present when dates is absent.
 	EndDate *Iso8601 `json:"endDate,omitempty,omitzero" yaml:"endDate,omitempty" mapstructure:"endDate,omitempty"`
 
 	// A list of relevant extracurricular activities participated in while a student
@@ -193,7 +201,8 @@ type ResumeEducationElem struct {
 	// degree designation and a name.
 	Programs []ResumeEducationElemProgramsElem `json:"programs,omitempty,omitzero" yaml:"programs,omitempty" mapstructure:"programs,omitempty"`
 
-	// The date on which the education at this institution was started.
+	// The date on which the education at this institution was started. Legacy
+	// single-range form, only present when dates is absent.
 	StartDate *Iso8601 `json:"startDate,omitempty,omitzero" yaml:"startDate,omitempty" mapstructure:"startDate,omitempty"`
 
 	// A specific college/school/department within the institution, e.g. 'College of
@@ -512,11 +521,18 @@ func (j *ResumeLanguagesElemFluency) UnmarshalYAML(value *yaml.Node) error {
 }
 
 type ResumeProjectsElem struct {
+	// The stretches of time work on this project happened, sorted from oldest to
+	// newest. Multiple ranges express resumed work. If current and ongoing, the last
+	// range's endDate is a blank string. An entry carries either this array or the
+	// legacy startDate/endDate pair, never both.
+	Dates []DateRange `json:"dates,omitempty,omitzero" yaml:"dates,omitempty" mapstructure:"dates,omitempty"`
+
 	// A short summary of project in 1-3 sentences. e.g. 'Collated works of 2017'.
 	Description *string `json:"description,omitempty,omitzero" yaml:"description,omitempty" mapstructure:"description,omitempty"`
 
 	// The date on which work on this project was stopped. If current and ongoing,
-	// specify a blank string as the value for this key.
+	// specify a blank string as the value for this key. Legacy single-range form,
+	// only present when dates is absent.
 	EndDate *Iso8601 `json:"endDate,omitempty,omitzero" yaml:"endDate,omitempty" mapstructure:"endDate,omitempty"`
 
 	// The relevant company/entity affiliations, if any, e.g. 'greenpeace',
@@ -542,7 +558,8 @@ type ResumeProjectsElem struct {
 	// A list of the roles taken on during the development of the project.
 	Roles []string `json:"roles,omitempty,omitzero" yaml:"roles,omitempty" mapstructure:"roles,omitempty"`
 
-	// The date on which work on this project was started.
+	// The date on which work on this project was started. Legacy single-range form,
+	// only present when dates is absent.
 	StartDate *Iso8601 `json:"startDate,omitempty,omitzero" yaml:"startDate,omitempty" mapstructure:"startDate,omitempty"`
 
 	//  e.g. 'volunteering', 'presentation', 'talk', 'application', 'conference'
@@ -605,8 +622,15 @@ type ResumeSkillsElem struct {
 }
 
 type ResumeVolunteerElem struct {
+	// The stretches of time this volunteer position was held, sorted from oldest to
+	// newest. Multiple ranges express interrupted service. If current and ongoing,
+	// the last range's endDate is a blank string. An entry carries either this array
+	// or the legacy startDate/endDate pair, never both.
+	Dates []DateRange `json:"dates,omitempty,omitzero" yaml:"dates,omitempty" mapstructure:"dates,omitempty"`
+
 	// The date on which this volunteer position was stopped. If current and ongoing,
-	// specify a blank string as the value for this key.
+	// specify a blank string as the value for this key. Legacy single-range form,
+	// only present when dates is absent.
 	EndDate *Iso8601 `json:"endDate,omitempty,omitzero" yaml:"endDate,omitempty" mapstructure:"endDate,omitempty"`
 
 	// A list of the key highlights of the volunteer role. For best results, use the
@@ -627,7 +651,8 @@ type ResumeVolunteerElem struct {
 	// The title of the volunteer role, e.g. 'Customer Service Representative'.
 	Position *string `json:"position,omitempty,omitzero" yaml:"position,omitempty" mapstructure:"position,omitempty"`
 
-	// The date on which this volunteer position was started.
+	// The date on which this volunteer position was started. Legacy single-range
+	// form, only present when dates is absent.
 	StartDate *Iso8601 `json:"startDate,omitempty,omitzero" yaml:"startDate,omitempty" mapstructure:"startDate,omitempty"`
 
 	// An overview of the responsibilities at the volunteer organization. No more than
@@ -645,6 +670,12 @@ type ResumeWorkElem struct {
 	// projects[].id, not this job's own id.
 	CrossReferencedProjects []string `json:"crossReferencedProjects,omitempty,omitzero" yaml:"crossReferencedProjects,omitempty" mapstructure:"crossReferencedProjects,omitempty"`
 
+	// The stretches of time this position was held, sorted from oldest to newest.
+	// Multiple ranges express interrupted stints, e.g. two tours at one employer. If
+	// current and ongoing, the last range's endDate is a blank string. An entry
+	// carries either this array or the legacy startDate/endDate pair, never both.
+	Dates []DateRange `json:"dates,omitempty,omitzero" yaml:"dates,omitempty" mapstructure:"dates,omitempty"`
+
 	// A short, 1 sentence maximum description of the company, e.g. 'Social Media
 	// Company'.
 	Description *string `json:"description,omitempty,omitzero" yaml:"description,omitempty" mapstructure:"description,omitempty"`
@@ -653,7 +684,8 @@ type ResumeWorkElem struct {
 	Employer *string `json:"employer,omitempty,omitzero" yaml:"employer,omitempty" mapstructure:"employer,omitempty"`
 
 	// The date on which this position was stopped. If current and ongoing, specify a
-	// blank string as the value for this key.
+	// blank string as the value for this key. Legacy single-range form, only present
+	// when dates is absent.
 	EndDate *Iso8601 `json:"endDate,omitempty,omitzero" yaml:"endDate,omitempty" mapstructure:"endDate,omitempty"`
 
 	// A list of the key highlights of the volunteer role. For best results, use the
@@ -675,7 +707,8 @@ type ResumeWorkElem struct {
 	// The title of the role, e.g. 'Software Engineer'.
 	Position *string `json:"position,omitempty,omitzero" yaml:"position,omitempty" mapstructure:"position,omitempty"`
 
-	// The date on which this position was started.
+	// The date on which this position was started. Legacy single-range form, only
+	// present when dates is absent.
 	StartDate *Iso8601 `json:"startDate,omitempty,omitzero" yaml:"startDate,omitempty" mapstructure:"startDate,omitempty"`
 
 	// An overview of the responsibilities at the company. No more than 3-5 sentences.

@@ -21,6 +21,11 @@ func DecodeResume(data []byte) (Resume, error) {
 	if err := json.Unmarshal(encoded, &resume); err != nil {
 		return Resume{}, err
 	}
+
+	// An entry mixing both date forms is ambiguous, so it fails decode.
+	if err := validateDateForms(&resume); err != nil {
+		return Resume{}, err
+	}
 	return resume, nil
 }
 
@@ -112,4 +117,64 @@ func formatSchemaTime(stamp time.Time) string {
 		return utc.Format("2006-01-02")
 	}
 	return stamp.Format(time.RFC3339)
+}
+
+// validateDateForms enforces the dated sections' exclusivity rule: a work,
+// volunteer, education, or projects entry carries either the dates array or
+// the legacy flat startDate/endDate pair, never both in the same entry. The
+// JSON schema cannot spell this exclusion in a form go-jsonschema compiles,
+// so decode guards it here.
+//
+//	@param resume The decoded resume to check.
+//	@return An error naming the section and entry that mixed the forms.
+func validateDateForms(resume *Resume) error {
+	// Work entries may not mix the two date forms.
+	for i := range resume.Work {
+		// A mixed entry fails decode with its list position.
+		if mixesDateForms(resume.Work[i].Dates, resume.Work[i].StartDate, resume.Work[i].EndDate) {
+			return fmt.Errorf("work[%d]: an entry carries either dates or the legacy startDate/endDate pair, never both", i)
+		}
+	}
+
+	// Volunteer entries follow the same rule.
+	for i := range resume.Volunteer {
+		// A mixed entry fails decode with its list position.
+		if mixesDateForms(resume.Volunteer[i].Dates, resume.Volunteer[i].StartDate, resume.Volunteer[i].EndDate) {
+			return fmt.Errorf("volunteer[%d]: an entry carries either dates or the legacy startDate/endDate pair, never both", i)
+		}
+	}
+
+	// Education entries follow the same rule.
+	for i := range resume.Education {
+		// A mixed entry fails decode with its list position.
+		if mixesDateForms(resume.Education[i].Dates, resume.Education[i].StartDate, resume.Education[i].EndDate) {
+			return fmt.Errorf("education[%d]: an entry carries either dates or the legacy startDate/endDate pair, never both", i)
+		}
+	}
+
+	// Projects entries follow the same rule.
+	for i := range resume.Projects {
+		// A mixed entry fails decode with its list position.
+		if mixesDateForms(resume.Projects[i].Dates, resume.Projects[i].StartDate, resume.Projects[i].EndDate) {
+			return fmt.Errorf("projects[%d]: an entry carries either dates or the legacy startDate/endDate pair, never both", i)
+		}
+	}
+	return nil
+}
+
+// mixesDateForms reports whether one entry carries both date forms: a
+// populated dates array alongside any legacy flat startDate or endDate.
+//
+//	@param dates The entry's dates array.
+//	@param start The entry's legacy flat startDate.
+//	@param end The entry's legacy flat endDate.
+//	@return Whether the two forms appear together.
+func mixesDateForms(dates []DateRange, start *Iso8601, end *Iso8601) bool {
+	// An absent or empty array cannot clash with the flat pair.
+	if len(dates) == 0 {
+		return false
+	}
+
+	// Any flat key beside a populated array mixes the forms.
+	return start != nil || end != nil
 }

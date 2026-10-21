@@ -9,6 +9,17 @@ import "reflect"
 import "regexp"
 import "time"
 
+// One contiguous stretch of time. A blank or absent endDate marks the range as
+// ongoing.
+type DateRange struct {
+	// The date on which this range ended. If ongoing, specify a blank string as the
+	// value for this key.
+	EndDate *Iso8601 `json:"endDate,omitempty,omitzero" yaml:"endDate,omitempty" mapstructure:"endDate,omitempty"`
+
+	// The date on which this range began.
+	StartDate *Iso8601 `json:"startDate,omitempty,omitzero" yaml:"startDate,omitempty" mapstructure:"startDate,omitempty"`
+}
+
 type ExperienceLevel string
 
 const ExperienceLevelDirector ExperienceLevel = "Director"
@@ -31,10 +42,10 @@ var enumValues_ExperienceLevel = []interface{}{
 	"Executive",
 }
 
-// UnmarshalYAML implements yaml.Unmarshaler.
-func (j *ExperienceLevel) UnmarshalYAML(value *yaml.Node) error {
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *ExperienceLevel) UnmarshalJSON(value []byte) error {
 	var v string
-	if err := value.Decode(&v); err != nil {
+	if err := json.Unmarshal(value, &v); err != nil {
 		return err
 	}
 	var ok bool
@@ -51,10 +62,10 @@ func (j *ExperienceLevel) UnmarshalYAML(value *yaml.Node) error {
 	return nil
 }
 
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *ExperienceLevel) UnmarshalJSON(value []byte) error {
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *ExperienceLevel) UnmarshalYAML(value *yaml.Node) error {
 	var v string
-	if err := json.Unmarshal(value, &v); err != nil {
+	if err := value.Decode(&v); err != nil {
 		return err
 	}
 	var ok bool
@@ -76,11 +87,11 @@ func (j *ExperienceLevel) UnmarshalJSON(value []byte) error {
 // dates.
 type Iso8601 string
 
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *Iso8601) UnmarshalJSON(value []byte) error {
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *Iso8601) UnmarshalYAML(value *yaml.Node) error {
 	type Plain Iso8601
 	var plain Plain
-	if err := json.Unmarshal(value, &plain); err != nil {
+	if err := value.Decode(&plain); err != nil {
 		return err
 	}
 	if matched, _ := regexp.MatchString(`^([1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]|[1-2][0-9]{3}-[0-1][0-9]|[1-2][0-9]{3}|)$`, string(plain)); !matched {
@@ -90,11 +101,11 @@ func (j *Iso8601) UnmarshalJSON(value []byte) error {
 	return nil
 }
 
-// UnmarshalYAML implements yaml.Unmarshaler.
-func (j *Iso8601) UnmarshalYAML(value *yaml.Node) error {
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *Iso8601) UnmarshalJSON(value []byte) error {
 	type Plain Iso8601
 	var plain Plain
-	if err := value.Decode(&plain); err != nil {
+	if err := json.Unmarshal(value, &plain); err != nil {
 		return err
 	}
 	if matched, _ := regexp.MatchString(`^([1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]|[1-2][0-9]{3}-[0-1][0-9]|[1-2][0-9]{3}|)$`, string(plain)); !matched {
@@ -122,10 +133,10 @@ var enumValues_JobType = []interface{}{
 	"Unspecified",
 }
 
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *JobType) UnmarshalJSON(value []byte) error {
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *JobType) UnmarshalYAML(value *yaml.Node) error {
 	var v string
-	if err := json.Unmarshal(value, &v); err != nil {
+	if err := value.Decode(&v); err != nil {
 		return err
 	}
 	var ok bool
@@ -142,10 +153,10 @@ func (j *JobType) UnmarshalJSON(value []byte) error {
 	return nil
 }
 
-// UnmarshalYAML implements yaml.Unmarshaler.
-func (j *JobType) UnmarshalYAML(value *yaml.Node) error {
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *JobType) UnmarshalJSON(value []byte) error {
 	var v string
-	if err := value.Decode(&v); err != nil {
+	if err := json.Unmarshal(value, &v); err != nil {
 		return err
 	}
 	var ok bool
@@ -235,10 +246,10 @@ var enumValues_MasteryLevel = []interface{}{
 	"Master",
 }
 
-// UnmarshalYAML implements yaml.Unmarshaler.
-func (j *MasteryLevel) UnmarshalYAML(value *yaml.Node) error {
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *MasteryLevel) UnmarshalJSON(value []byte) error {
 	var v string
-	if err := value.Decode(&v); err != nil {
+	if err := json.Unmarshal(value, &v); err != nil {
 		return err
 	}
 	var ok bool
@@ -255,10 +266,10 @@ func (j *MasteryLevel) UnmarshalYAML(value *yaml.Node) error {
 	return nil
 }
 
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *MasteryLevel) UnmarshalJSON(value []byte) error {
+// UnmarshalYAML implements yaml.Unmarshaler.
+func (j *MasteryLevel) UnmarshalYAML(value *yaml.Node) error {
 	var v string
-	if err := json.Unmarshal(value, &v); err != nil {
+	if err := value.Decode(&v); err != nil {
 		return err
 	}
 	var ok bool
