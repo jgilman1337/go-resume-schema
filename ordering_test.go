@@ -18,7 +18,7 @@ func TestResumeOrdering(t *testing.T) {
 	wantRoot := []string{
 		"basics", "work", "volunteer", "education", "awards", "certificates",
 		"publications", "skills", "languages", "interests", "references",
-		"projects", "meta", "settings",
+		"projects", "settings", "meta",
 	}
 	if got, ok := spec["$"]; !ok || !reflect.DeepEqual(got, wantRoot) {
 		t.Fatalf("resume root order = %v, want %v", got, wantRoot)

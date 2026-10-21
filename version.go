@@ -6,4 +6,4 @@ package go_resume_schema
 // Version is the resume schema release this driver's types encode. It
 // matches this repository's release tag and the schema submodule's
 // schema.json version, and moves only on a schema release.
-const Version = "2.2.0"
+const Version = "2.2.1"

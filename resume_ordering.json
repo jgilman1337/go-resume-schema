@@ -12,8 +12,8 @@
 		"interests",
 		"references",
 		"projects",
-		"meta",
-		"settings"
+		"settings",
+		"meta"
 	],
 	"basics": ["name", "label", "image", "email", "phone", "summary", "location", "links"],
 	"basics.location": ["address", "postalCode", "city", "countryCode", "region"],
@@ -31,7 +31,8 @@
 		"summary",
 		"highlights",
 		"crossReferencedProjects",
-		"keywords"
+		"keywords",
+		"comment"
 	],
 	"volunteer.volunteer": [
 		"id",
@@ -43,7 +44,8 @@
 		"endDate",
 		"summary",
 		"highlights",
-		"keywords"
+		"keywords",
+		"comment"
 	],
 	"education.education": [
 		"id",
@@ -64,7 +66,8 @@
 		"honorSocieties",
 		"extracurriculars",
 		"keywords",
-		"notes"
+		"notes",
+		"comment"
 	],
 	"education.education.programs.program": [
 		"type",
@@ -81,7 +84,7 @@
 		"memberId",
 		"inductionDate"
 	],
-	"awards.award": ["id", "title", "date", "awarder", "summary", "keywords"],
+	"awards.award": ["id", "title", "date", "awarder", "summary", "keywords", "comment"],
 	"certificates.certificate": [
 		"id",
 		"name",
@@ -89,7 +92,8 @@
 		"issuer",
 		"url",
 		"verificationId",
-		"keywords"
+		"keywords",
+		"comment"
 	],
 	"publications.publication": [
 		"id",
@@ -98,12 +102,13 @@
 		"releaseDate",
 		"url",
 		"summary",
-		"keywords"
+		"keywords",
+		"comment"
 	],
-	"skills.skill": ["id", "name", "level", "keywords"],
-	"languages.language": ["id", "language", "fluency"],
-	"interests.interest": ["id", "name", "keywords"],
-	"references.reference": ["id", "name", "reference"],
+	"skills.skill": ["id", "name", "level", "keywords", "comment"],
+	"languages.language": ["id", "language", "fluency", "comment"],
+	"interests.interest": ["id", "name", "keywords", "comment"],
+	"references.reference": ["id", "name", "reference", "comment"],
 	"projects.project": [
 		"id",
 		"name",
@@ -116,7 +121,8 @@
 		"url",
 		"roles",
 		"entity",
-		"type"
+		"type",
+		"comment"
 	],
 	"meta": ["canonical", "version", "lastModified"],
 	"settings": ["sectionOrder", "exclusions", "exportFormat"],

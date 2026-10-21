@@ -62,6 +62,11 @@ type ResumeAwardsElem struct {
 	// The organization or entity that conferred the award, e.g. 'Time Magazine'.
 	Awarder *string `json:"awarder,omitempty,omitzero" yaml:"awarder,omitempty" mapstructure:"awarder,omitempty"`
 
+	// Optional private note for this award, e.g. context or a reminder for the
+	// resume's owner. The app shows it as a tooltip; resume templates and exports
+	// never print it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// Date corresponds to the JSON schema field "date".
 	Date *Iso8601 `json:"date,omitempty,omitzero" yaml:"date,omitempty" mapstructure:"date,omitempty"`
 
@@ -116,6 +121,11 @@ type ResumeBasicsLinksElem struct {
 }
 
 type ResumeCertificatesElem struct {
+	// Optional private note for this certificate, e.g. context or a reminder for the
+	// resume's owner. The app shows it as a tooltip; resume templates and exports
+	// never print it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// The date the certificate was issued.
 	Date *Iso8601 `json:"date,omitempty,omitzero" yaml:"date,omitempty" mapstructure:"date,omitempty"`
 
@@ -147,6 +157,11 @@ type ResumeEducationElem struct {
 	// Awards or honors earned for this program, e.g. 'Dean's List', 'Graduated with
 	// Honors'.
 	Awards []string `json:"awards,omitempty,omitzero" yaml:"awards,omitempty" mapstructure:"awards,omitempty"`
+
+	// Optional private note for this education entry, e.g. context or a reminder for
+	// the resume's owner. The app shows it as a tooltip; resume templates and exports
+	// never print it. Distinct from notes, which may print.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
 
 	// A list of relevant courses/subjects.
 	Courses []string `json:"courses,omitempty,omitzero" yaml:"courses,omitempty" mapstructure:"courses,omitempty"`
@@ -443,6 +458,11 @@ func (j *ResumeEducationElem) UnmarshalYAML(value *yaml.Node) error {
 }
 
 type ResumeInterestsElem struct {
+	// Optional private note for this interest, e.g. context or a reminder for the
+	// resume's owner. The app shows it as a tooltip; resume templates and exports
+	// never print it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// Stable token a settings exclusion uses to name this interest.
 	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
@@ -454,6 +474,11 @@ type ResumeInterestsElem struct {
 }
 
 type ResumeLanguagesElem struct {
+	// Optional private note for this language, e.g. context or a reminder for the
+	// resume's owner. The app shows it as a tooltip; resume templates and exports
+	// never print it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// The proficiency in utilizing this language according to the CEFR.
 	Fluency *ResumeLanguagesElemFluency `json:"fluency,omitempty,omitzero" yaml:"fluency,omitempty" mapstructure:"fluency,omitempty"`
 
@@ -521,6 +546,11 @@ func (j *ResumeLanguagesElemFluency) UnmarshalYAML(value *yaml.Node) error {
 }
 
 type ResumeProjectsElem struct {
+	// Optional private note for this project, e.g. context or a reminder for the
+	// resume's owner. The app shows it as a tooltip; resume templates and exports
+	// never print it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// The stretches of time work on this project happened, sorted from oldest to
 	// newest. Multiple ranges express resumed work. If current and ongoing, the last
 	// range's endDate is a blank string. An entry carries either this array or the
@@ -570,6 +600,11 @@ type ResumeProjectsElem struct {
 }
 
 type ResumePublicationsElem struct {
+	// Optional private note for this publication, e.g. context or a reminder for the
+	// resume's owner. The app shows it as a tooltip; resume templates and exports
+	// never print it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// Stable token a settings exclusion uses to name this publication.
 	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
@@ -595,6 +630,11 @@ type ResumePublicationsElem struct {
 }
 
 type ResumeReferencesElem struct {
+	// Optional private note for this reference, e.g. context or a reminder for the
+	// resume's owner. The app shows it as a tooltip; resume templates and exports
+	// never print it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// Stable token a settings exclusion uses to name this reference.
 	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
@@ -607,6 +647,11 @@ type ResumeReferencesElem struct {
 }
 
 type ResumeSkillsElem struct {
+	// Optional private note for this skill, e.g. context or a reminder for the
+	// resume's owner. The app shows it as a tooltip; resume templates and exports
+	// never print it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// Stable token a settings exclusion uses to name this skill.
 	Id *string `json:"id,omitempty,omitzero" yaml:"id,omitempty" mapstructure:"id,omitempty"`
 
@@ -622,6 +667,11 @@ type ResumeSkillsElem struct {
 }
 
 type ResumeVolunteerElem struct {
+	// Optional private note for this volunteer position, e.g. context or a reminder
+	// for the resume's owner. The app shows it as a tooltip; resume templates and
+	// exports never print it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// The stretches of time this volunteer position was held, sorted from oldest to
 	// newest. Multiple ranges express interrupted service. If current and ongoing,
 	// the last range's endDate is a blank string. An entry carries either this array
@@ -665,6 +715,11 @@ type ResumeVolunteerElem struct {
 }
 
 type ResumeWorkElem struct {
+	// Optional private note for this job, e.g. context or a reminder for the resume's
+	// owner. The app shows it as a tooltip; resume templates and exports never print
+	// it.
+	Comment *string `json:"comment,omitempty,omitzero" yaml:"comment,omitempty" mapstructure:"comment,omitempty"`
+
 	// Optional list of projects[].id values for projects that belong to this job,
 	// such as consulting engagements under one employer. Each string is a
 	// projects[].id, not this job's own id.
