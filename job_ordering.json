@@ -17,6 +17,6 @@
 		"meta"
 	],
 	"location": ["address", "postalCode", "city", "countryCode", "region"],
-	"skills.skill": ["name", "level", "keywords"],
+	"skills": ["name", "level", "keywords"],
 	"meta": ["canonical", "version", "lastModified"]
 }

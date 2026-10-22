@@ -15,10 +15,32 @@
 		"settings",
 		"meta"
 	],
-	"basics": ["name", "label", "image", "email", "phone", "summary", "location", "links"],
-	"basics.location": ["address", "postalCode", "city", "countryCode", "region"],
-	"basics.links.link": ["url", "label"],
-	"work.work": [
+	"basics": [
+		"name",
+		"label",
+		"image",
+		"email",
+		"phone",
+		"summary",
+		"location",
+		"links"
+	],
+	"location": [
+		"address",
+		"postalCode",
+		"city",
+		"countryCode",
+		"region"
+	],
+	"link": [
+		"url",
+		"label"
+	],
+	"dateRange": [
+		"startDate",
+		"endDate"
+	],
+	"work": [
 		"id",
 		"employer",
 		"location",
@@ -34,7 +56,7 @@
 		"keywords",
 		"comment"
 	],
-	"volunteer.volunteer": [
+	"volunteer": [
 		"id",
 		"organization",
 		"position",
@@ -47,7 +69,7 @@
 		"keywords",
 		"comment"
 	],
-	"education.education": [
+	"education": [
 		"id",
 		"institution",
 		"subInstitution",
@@ -69,7 +91,7 @@
 		"notes",
 		"comment"
 	],
-	"education.education.programs.program": [
+	"program": [
 		"type",
 		"designation",
 		"name",
@@ -78,14 +100,22 @@
 		"gpa",
 		"honors"
 	],
-	"education.education.honorSocieties.honorSociety": [
+	"honorSociety": [
 		"name",
 		"chapter",
 		"memberId",
 		"inductionDate"
 	],
-	"awards.award": ["id", "title", "date", "awarder", "summary", "keywords", "comment"],
-	"certificates.certificate": [
+	"awards": [
+		"id",
+		"title",
+		"date",
+		"awarder",
+		"summary",
+		"keywords",
+		"comment"
+	],
+	"certificates": [
 		"id",
 		"name",
 		"date",
@@ -95,7 +125,7 @@
 		"keywords",
 		"comment"
 	],
-	"publications.publication": [
+	"publications": [
 		"id",
 		"name",
 		"publisher",
@@ -105,11 +135,32 @@
 		"keywords",
 		"comment"
 	],
-	"skills.skill": ["id", "name", "level", "keywords", "comment"],
-	"languages.language": ["id", "language", "fluency", "comment"],
-	"interests.interest": ["id", "name", "keywords", "comment"],
-	"references.reference": ["id", "name", "reference", "comment"],
-	"projects.project": [
+	"skills": [
+		"id",
+		"name",
+		"level",
+		"keywords",
+		"comment"
+	],
+	"languages": [
+		"id",
+		"language",
+		"fluency",
+		"comment"
+	],
+	"interests": [
+		"id",
+		"name",
+		"keywords",
+		"comment"
+	],
+	"references": [
+		"id",
+		"name",
+		"reference",
+		"comment"
+	],
+	"projects": [
 		"id",
 		"name",
 		"description",
@@ -124,7 +175,18 @@
 		"type",
 		"comment"
 	],
-	"meta": ["canonical", "version", "lastModified"],
-	"settings": ["sectionOrder", "exclusions", "exportFormat"],
-	"settings.exclusions.exclusion": ["section", "subsection"]
+	"meta": [
+		"canonical",
+		"version",
+		"lastModified"
+	],
+	"settings": [
+		"sectionOrder",
+		"exclusions",
+		"exportFormat"
+	],
+	"exclusion": [
+		"section",
+		"subsection"
+	]
 }

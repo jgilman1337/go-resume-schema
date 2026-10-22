@@ -8,9 +8,10 @@ import (
 )
 
 // resumeOrderingJSON is the manifest that declares the output field order of
-// every resume schema object. Keys are dotted document paths, where "$" is the
-// document root and "<array path>.<object name>" addresses the objects carried
-// by an array, e.g. "work.work" for the items of "work".
+// every resume schema object. Keys are usually schema type names: "work" for
+// work[] items, "dateRange" for dates[] items, "location" for every location
+// object, and "$" for the document root. The docorder package resolves these
+// keys from document paths and legacy dotted-path entries when needed.
 //
 //go:embed resume_ordering.json
 var resumeOrderingJSON []byte
