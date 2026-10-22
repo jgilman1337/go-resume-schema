@@ -91,7 +91,7 @@
 		"notes",
 		"comment"
 	],
-	"program": [
+	"programs": [
 		"type",
 		"designation",
 		"name",
@@ -100,7 +100,7 @@
 		"gpa",
 		"honors"
 	],
-	"honorSociety": [
+	"honorSocieties": [
 		"name",
 		"chapter",
 		"memberId",

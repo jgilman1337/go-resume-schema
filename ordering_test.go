@@ -26,7 +26,7 @@ func TestResumeOrdering(t *testing.T) {
 
 	// Shared schema types are keyed by definition name, not dotted paths.
 	for _, typeName := range []string{
-		"work", "skills", "program", "location", "link", "dateRange", "exclusion",
+		"work", "skills", "programs", "honorSocieties", "location", "link", "dateRange", "exclusion",
 	} {
 		if _, ok := spec[typeName]; !ok {
 			t.Fatalf("resume manifest is missing type %q", typeName)
